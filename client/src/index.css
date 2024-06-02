@@ -57,6 +57,11 @@ body {
   opacity: 0.6;
 }
 
+.todo-input-container{
+  display: flex;
+  justify-content: space-around;
+}
+
 .add-btn,
 .complete-btn,
 .edit-btn,
@@ -87,6 +92,7 @@ body {
   color: #ffc107; /* Yellow color */
   background-color: #fef9e7; /* Light yellow background */
 }
+
 
 .delete-btn {
   color: #dc3545; /* Red color */

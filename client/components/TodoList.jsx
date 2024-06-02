@@ -39,6 +39,8 @@ const TodoList = () => {
       })
       .catch(error => {
         console.error("Delete Todo Error:", error);
+        setError('Failed to delete todo');
+        setTimeout(() => setError(null), 5000); // Clear error message after 5 seconds
       });
   };
 
@@ -76,16 +78,34 @@ const TodoList = () => {
     <div className="container">
       <h1>Todo List</h1>
       <div style={{ display: 'flex', marginBottom: '1rem' }}>
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="todo-input" />
+        <input 
+          type="text" 
+          value={text} 
+          onChange={(e) => setText(e.target.value)} 
+          className="todo-input" 
+          placeholder="Enter new todo"
+        />
         <button onClick={addTodo} className="add-btn">Add</button>
       </div>
       {error && <div className="error-message">{error}</div>}
       <ul className="todo-list">
         {todos.map(todo => (
           <li key={todo._id} className="todo-item">
-            <span className={todo.completed ? 'completed todo-item-text' : 'todo-item-text'}>
-              {todo.text}
-            </span>
+            {editingId === todo._id ? (
+              <div className="todo-input-container">
+                <input 
+                  type="text" 
+                  value={editText}
+                  className="todo-input"
+                  onChange={(e) => setEditText(e.target.value)} 
+                />
+                <button onClick={() => saveEdit(todo._id)} className="edit-btn">Save</button>
+              </div>
+            ) : (
+              <span className={todo.completed ? 'completed todo-item-text' : 'todo-item-text'}>
+                {todo.text}
+              </span>
+            )}
             <span>
               <button onClick={() => toggleComplete(todo._id)} className="complete-btn">
                 {todo.completed ? 'Undo' : 'Complete'}
